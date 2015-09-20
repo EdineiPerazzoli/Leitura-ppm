@@ -1,0 +1,32 @@
+# Leitura-ppm
+
+void leitura() {
+	int w, h;
+	ifstream arq;
+	char linha[1024];
+	arq.open("c:\\imagem1.ppm");
+	arq >> linha; // tipo de arquivo
+	arq >> linha; //Comentario Pode ter ou não 
+	if (linha == "#") {
+		arq.getline(linha, 1024);
+	}
+	else
+	{
+		w = atoi(linha);
+	}
+	arq >> linha;
+	h = atoi(linha);
+	arq >> linha;
+	image = new Image(w, h);
+
+	Image *image = new Image(w, h);
+	for (int i = 0; i < w * h; i++) {
+		int a, r, g, b;
+		arq >> a >> r >> g >> b;
+		int x = i % w;
+		int y = i / w;
+		y = h - y - 1; // inverte o y
+		int pixel = (a << 24) | (r << 16) | (g << 8) | b;
+		image->setPixels(pixel, x, y);
+	}
+}
